@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Box, Container, Switch } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import Todo from "./components/Todo";
+import Weather from "./components/Weather";
 function App() {
+  const [theme, settheme] = useState(false);
+  const darkTheme = createTheme({
+    palette: {
+      mode: theme ? "dark" : "light",
+    },
+  });
+  const handleChange = (event) => {
+    settheme(event.target.checked);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "2rem",
+      }}
+    >
+      <Box sx={{ width: "100%", gap: "1rem" }}>
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
+          <label>Dark Mode</label>
+          <Switch checked={theme} color="success" onChange={handleChange} />
+          <Todo />
+          <Weather />
+        </ThemeProvider>
+      </Box>
+    </Container>
   );
 }
 
